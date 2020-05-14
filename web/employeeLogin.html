@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body id="employ_login">
+
+<h1 id="employ_login_header">Fablix Employee Login</h1>
+
+<form id="employee_login_form" method="post" action="#">
+    <label><b>Username</b></label>
+    <label>
+        <input name="employeename" placeholder="Enter Username" type="text">
+    </label>
+    <br>
+    <label><b>Password</b></label>
+    <label>
+        <input name="employeepassword" placeholder="Enter Password" type="password">
+    </label>
+    <br>
+    <input type="submit" value="Login">
+</form>
+
+<div id="employee_login_error_message"></div>
+
+<div>
+    <a href="login.html" class="btn btn-outline-light login_change">Go to Customer Login</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="employeeLogin.js"></script>
+
+</body>
+</html>
