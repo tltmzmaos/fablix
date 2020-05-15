@@ -1,5 +1,4 @@
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,11 +29,16 @@ public class SearchServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             Connection con = dataSource.getConnection();
+            String[] input_split = searchInput.split(" ");
 
-            String ft_search = "SELECT id FROM movies WHERE MATCH (title) AGAINST (? IN BOOLEAN MODE);";
-            PreparedStatement ft_st = con.prepareStatement(ft_search);
-            ft_st.setString(1, searchInput);
-            ResultSet ft_rs = ft_st.executeQuery();
+            String prefix_query = "SELECT id FROM movies WHERE MATCH (title) AGAINST (";
+            StringBuffer pr = new StringBuffer(prefix_query);
+            for(int i=0; i<input_split.length; i++){
+                pr.append("'+"+ input_split[i] +"*'");
+            }
+            pr.append("IN BOOLEAN MODE);");
+            PreparedStatement p_s = con.prepareStatement(String.valueOf(pr));
+            ResultSet ft_rs = p_s.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
             while (ft_rs.next()) {
@@ -85,60 +89,11 @@ public class SearchServlet extends HttpServlet {
                 rs.close();
                 statement.close();
             }
-
-//            String query = "select gs.id, gs.title, gs.year, gs.director, gs.genres, gs.genreId, gs.stars, gs.starId, rating\n" +
-//                    "from\n" +
-//                    "(select movies.id, title, director, year, group_concat(distinct genres.name) as genres,\n" +
-//                    "group_concat(distinct genres.id order by genres.name) as genreId,\n" +
-//                    "group_concat(distinct stars.name) as stars,\n" +
-//                    "group_concat(distinct stars.id order by stars.name) as starId\n" +
-//                    "from movies, stars, stars_in_movies, genres, genres_in_movies\n" +
-//                    "where\n" +
-//                    "movies.id = stars_in_movies.movieId and\n" +
-//                    "stars.id = stars_in_movies.starId and\n" +
-//                    "genres_in_movies.movieId = movies.id and\n" +
-//                    "genres.id = genres_in_movies.genreId and\n" +
-//                    "movies.title like ?\n"+
-//                    "group by movies.id) as gs\n" +
-//                    "LEFT JOIN ratings ON\n" +
-//                    "ratings.movieId = gs.id\n" +
-//                    ";";
-//
-//            PreparedStatement statement = con.prepareStatement(query);
-//            statement.setString(1, "%" + searchInput + "%");
-//            ResultSet rs = statement.executeQuery();
-//
-//            JsonArray jsonArray = new JsonArray();
-//            while (rs.next()){
-//                String id = rs.getString("gs.id");
-//                String title = rs.getString("gs.title");
-//                String year = rs.getString("gs.year");
-//                String director = rs.getString("gs.director");
-//                String genres = rs.getString("gs.genres");
-//                String stars = rs.getString("gs.stars");
-//                String starId = rs.getString("gs.starId");
-//                String rating = rs.getString("rating");
-//
-//                JsonObject jsonObject = new JsonObject();
-//                jsonObject.addProperty("movie_id", id);
-//                jsonObject.addProperty("movie_title", title);
-//                jsonObject.addProperty("movie_year", year);
-//                jsonObject.addProperty("movie_director", director);
-//                jsonObject.addProperty("movie_genres", genres);
-//                jsonObject.addProperty("movie_stars", stars);
-//                jsonObject.addProperty("star_id",starId);
-//                jsonObject.addProperty("movie_rating", rating);
-//
-//                jsonArray.add(jsonObject);
-//            }
             out.write(jsonArray.toString());
             response.setStatus(200);
-//            rs.close();
-//            statement.close();
             ft_rs.close();
-            ft_st.close();
+            p_s.close();
             con.close();
-
 
         } catch (Exception e) {
             JsonObject jsonObject = new JsonObject();

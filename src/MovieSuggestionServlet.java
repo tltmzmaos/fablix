@@ -13,9 +13,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @WebServlet("/movie-suggestion")
 public class MovieSuggestionServlet extends HttpServlet {
@@ -34,15 +32,12 @@ public class MovieSuggestionServlet extends HttpServlet {
         try{
             Connection con = dataSource.getConnection();
             JsonArray jsonArray = new JsonArray();
-
             titleMap = getMap(con);
-
             if(titleMap.isEmpty() || searchInput.length() < 3){
                 out.write(jsonArray.toString());
                 return;
             }
             int count = 0;
-
             for(String i : titleMap.keySet()){
                 String title = titleMap.get(i);
                 if(title.toLowerCase().contains(searchInput)){
@@ -53,11 +48,8 @@ public class MovieSuggestionServlet extends HttpServlet {
                     count++;
                 }
             }
-
             out.write(jsonArray.toString());
-            System.out.println(jsonArray.toString());
             response.setStatus(200);
-
             con.close();
             return;
         }catch (Exception e){
@@ -88,10 +80,8 @@ public class MovieSuggestionServlet extends HttpServlet {
     private static JsonObject generateJsonObject(String id, String title) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("value", title);
-
         JsonObject additionalDataJsonObject = new JsonObject();
         additionalDataJsonObject.addProperty("id", id);
-
         jsonObject.add("data", additionalDataJsonObject);
         return jsonObject;
     }

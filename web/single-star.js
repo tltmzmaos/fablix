@@ -47,6 +47,10 @@ jQuery.ajax({
     success: (resultData) => singleStarResult(resultData)
 });
 
+
+/*
+Autocomplete
+ */
 var cache_sug = {};
 
 function handleLookup(query, doneCallback) {

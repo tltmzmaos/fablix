@@ -331,3 +331,80 @@ jQuery.ajax({
         pSplit();
     }
 });
+
+
+/*
+Auto complete
+ */
+
+var cache_sug = {};
+
+function handleLookup(query, doneCallback) {
+    console.log("autocomplete initiated")
+
+    // TODO: if you want to check past query results first, you can do it here
+    if(query in cache_sug){
+        handleCacheLookup(cache_sug[query], query, doneCallback)
+    }else{
+        jQuery.ajax({
+            "method": "GET",
+            "url": "movie-suggestion?query=" + escape(query),
+            "success": function(data) {
+                handleLookupAjaxSuccess(data, query, doneCallback);
+            },
+            "error": function(errorData) {
+                console.log("lookup ajax error")
+                console.log(errorData)
+            }
+        })
+    }
+}
+
+function handleCacheLookup(data, query, doneCallback) {
+    console.log("Suggestion list from FRONT-END")
+    console.log(data)
+    doneCallback({suggestions: data})
+}
+
+function handleLookupAjaxSuccess(data, query, doneCallback) {
+    console.log("lookup ajax successful with " + query);
+    console.log("Suggestion list from BACK-END")
+    var jsonData = JSON.parse(data);
+    console.log(jsonData)
+    // TODO: if you want to cache the result into a global variable you can do it here
+    cache_sug[query] = jsonData;
+    console.log(query + " cached")
+    doneCallback( { suggestions: jsonData } );
+
+}
+
+function handleSelectSuggestion(suggestion) {
+    // TODO: jump to the specific result page based on the selected suggestion
+    //console.log("you select " + suggestion["title"] + " with ID " + suggestion["data"]["heroID"])
+    console.log(suggestion['value']);
+    location.replace("single-movie.html?id="+suggestion["data"]["id"]);
+}
+
+
+$('#autocomplete').autocomplete({
+    lookup: function (query, doneCallback) {
+        handleLookup(query, doneCallback)
+    },
+    onSelect: function(suggestion) {
+        handleSelectSuggestion(suggestion)
+    },
+    deferRequestBy: 300,
+    // there are some other parameters that you might want to use to satisfy all the requirements
+    // TODO: add other parameters, such as minimum characters
+});
+
+function handleNormalSearch(query) {
+    console.log("doing normal search with query: " + query);
+    // TODO: you should do normal search here
+}
+
+$('#autocomplete').keypress(function(event) {
+    if (event.keyCode == 13) {
+        handleNormalSearch($('#autocomplete').val())
+    }
+})

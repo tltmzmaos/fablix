@@ -333,6 +333,9 @@ jQuery.ajax({
     }
 });
 
+/*
+Autocomplete
+ */
 
 var cache_sug = {};
 

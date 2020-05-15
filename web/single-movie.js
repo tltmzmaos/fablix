@@ -19,8 +19,18 @@ function singleMovieResult(resultData) {
     let row = "";
     row += "<tr>";
     var genreArray = resultData[0]['movie_genres'].split(",");
-    var starArray = resultData[0]['movie_stars'].split(",");
-    var starIdArray = resultData[0]['star_id'].split(",");
+    var starArray;
+    if(resultData[0]['movie_stars'] === null){
+        starArray = ['N/A'];
+    }else{
+        starArray = resultData[0]['movie_stars'].split(",");
+    }
+    var starIdArray;
+    if(resultData[0]['star_id']=== null){
+        starIdArray = ['N/A'];
+    }else{
+        starIdArray = resultData[0]['star_id'].split(",");
+    }
 
     row += "<th>" + resultData[0]['movie_director'] + "</th>";
 
@@ -107,6 +117,9 @@ jQuery.ajax({
     }
 });
 
+/*
+Autocomplete
+ */
 var cache_sug = {};
 
 function handleLookup(query, doneCallback) {
