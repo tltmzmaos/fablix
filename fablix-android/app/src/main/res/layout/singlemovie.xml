@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000000"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp">
+
+    <TextView
+            android:id="@+id/single_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+    />
+
+    <TextView
+            android:id="@+id/single_year_blank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"
+            android:layout_below="@id/single_title"
+            android:textColor="#666666"
+            android:text="Year"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+    />
+
+    <TextView
+            android:id="@+id/single_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"
+            android:layout_below="@id/single_year_blank"
+            android:textColor="#D3D3D3"
+            android:layout_marginTop="8dp"
+    />
+
+    <TextView
+            android:id="@+id/single_director_blank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"
+            android:layout_below="@id/single_year"
+            android:textColor="#666666"
+            android:text="Director"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+    />
+
+    <TextView
+            android:id="@+id/single_director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/single_director_blank"
+            android:textSize="20dp"
+            android:textColor="#D3D3D3"
+            android:layout_marginTop="8dp"
+    />
+
+    <TextView
+            android:id="@+id/single_genres_blank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/single_director"
+            android:textSize="20dp"
+            android:text="Genres"
+            android:textStyle="bold"
+            android:textColor="#666666"
+            android:layout_marginTop="10dp"
+    />
+
+    <TextView
+            android:id="@+id/single_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/single_genres_blank"
+            android:textSize="15dp"
+            android:textColor="#D3D3D3"
+            android:layout_marginTop="8dp"
+    />
+
+    <TextView
+            android:id="@+id/single_stars_blank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/single_genres"
+            android:textSize="20dp"
+            android:text="Stars"
+            android:textStyle="bold"
+            android:textColor="#666666"
+            android:layout_marginTop="10dp"
+    />
+
+    <TextView
+            android:id="@+id/single_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/single_stars_blank"
+            android:textSize="15dp"
+            android:textColor="#D3D3D3"
+            android:layout_marginTop="8dp"
+    />
+
+</RelativeLayout>

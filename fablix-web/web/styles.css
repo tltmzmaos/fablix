@@ -1,0 +1,359 @@
+/* navbar design */
+
+.navbar{
+    background-color: black;
+    text-align: center;
+    border-bottom-style: solid;
+    border-color: #333333;
+    border-width: 1px;
+    color: white;
+}
+
+#fablix-button{
+    color: red;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#fablix-button:hover{
+    transform: scale(1.3);
+    color: white;
+}
+
+#movie_button{
+    color: white;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+#movie_button:hover{
+    transform: scale(1.3);
+    color: red;
+}
+
+#browse_button{
+    color: white;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+#browse_button:hover{
+    transform: scale(1.3);
+    color: red;
+}
+
+#cart_button{
+    color: white;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+#cart_button:hover{
+    transform: scale(1.3);
+    color: red;
+}
+
+.btn{
+    color: white;
+}
+
+
+p{
+    text-align: center;
+    color: white;
+}
+
+#title{
+    background-color: red;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    color: white;
+}
+
+#details{
+    font-size: small;
+    color: white;
+}
+
+.popup{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* search */
+
+#searchPopUp {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.form-popup{
+    border: 2px solid #666;
+    z-index: 9;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+#search_form{
+    max-width: 300px;
+    padding: 20px;
+    background-color: #333333;
+}
+
+/* login page */
+
+#login_page_body{
+    background-color: black;
+    text-align: center;
+    color: red;
+    margin-top: 25%;
+}
+
+#login_form{
+    display: inline-block;
+    color: white;
+    margin-top: 5%;
+}
+
+/* Main page */
+.mainrow_heading{
+    color: white;
+    padding-top: 5%;
+}
+
+hr{
+    border-style: none;
+    color: #333333;
+    border-width: 5px;
+    border-bottom-style: dotted;
+    width: 5%;
+    border-color: white;
+    padding-bottom: 5%;
+}
+
+.mainpage-row{
+    text-align: center;
+    color: white;
+    padding-bottom: 5%;
+    padding-top: 5%;
+}
+
+/* movie page */
+#movie{
+    color: white;
+}
+
+.number_result{
+    float: left;
+    text-align: justify;
+}
+
+.sort_selection{
+    float: right;
+    text-align: justify;
+}
+
+#prenextBtns{
+    text-align: center;
+}
+
+/* browse */
+#browse_by_alpha{
+    color: white;
+    text-align: center;
+}
+
+#browse_by_genre{
+    color: white;
+    text-align: center;
+}
+
+/* search page */
+#search_page{
+    color: white;
+}
+
+#prenextButtn{
+    text-align: center;
+}
+
+h2{
+    color: white;
+    text-align: center;
+}
+
+#prenextButtns{
+    text-align: center;
+}
+
+#prenextBtt{
+    text-align: center;
+}
+
+/* cart page */
+#cart_page{
+    color: white;
+}
+
+.cart-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.cart-row {
+    margin-bottom:5px;
+
+
+}
+
+
+.cart-column {
+    margin-top:5px;
+    float: left;
+    width: 33.33%;
+    padding-top: 20px;
+    padding-left: 50px;
+    align-items:center;
+}
+
+.cart-total {
+    padding-top: 10px;
+    padding-left:50px;
+
+}
+.btn-purchase {
+    margin-left: 50px;
+    margin-top:5px;
+}
+
+/*Checkout page */
+.payment-form {
+    background: #404040;
+    max-width: 400px;
+    margin: 40px auto;
+    height: auto;
+    padding: 30px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.payment-form h2{
+    text-align:center;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.form .label {
+    display: block;
+    color : #555555;
+    margin-bottom: 6px;
+}
+
+.checkout-label {
+    color:white;
+    margin-top:15px;
+}
+
+.checkout-btn {
+    margin-top: 30px;
+    padding: 10px;
+    text-align: center;
+    color: #f8f8f8;
+    border-radius: 10px;
+
+}
+
+/* Employee login */
+
+#employ_login{
+    color: white;
+    background-color: black;
+    text-align: center;
+    margin-top: 25%;
+}
+
+#employ_login_header{
+    color: red;
+}
+
+#employee_login_form{
+    display: inline-block;
+    color: white;
+    margin-top: 5%;
+}
+
+.login_change{
+    margin-top: 3%;
+}
+
+/* dashboard page */
+
+#dashboard_body{
+    color: white;
+    background-color: black;
+    text-align: center;
+}
+
+#dashbaord-admin-button{
+    color: red;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#dashbaord-admin-button:hover{
+    transform: scale(1.1);
+    color: white;
+}
+
+.dashboard-nav-button{
+    color: white;
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
+.dashboard-nav-button:hover{
+    transform: scale(1.1);
+    color: red;
+}
+
+.new_body{
+    color: white;
+    background-color: black;
+    text-align: center;
+}
+
+.new-form{
+    background-color: #404040;
+    max-width: 400px;
+    margin: 40px auto;
+    height: auto;
+    padding: 30px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.container{
+    color: white;
+    background-color: black;
+}
+
+.autocomplete-suggestions{
+    background-color: #f8f8f8;
+}
+
+.autocomplete-selected{
+    background-color: darkgrey;
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="400px"
+              android:background="#000000"
+>
+
+    <TextView
+            android:id="@+id/title"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"/>
+
+    <TextView
+            android:id="@+id/year"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"/>
+
+    <TextView
+            android:id="@+id/director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="#ffffff"/>
+
+    <TextView
+            android:id="@+id/genre"
+            android:textSize="13dp"
+            android:textColor="#D3D3D3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+            android:id="@+id/star"
+            android:textSize="13dp"
+            android:textColor="#D3D3D3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    </TextView>
+
+</LinearLayout>
