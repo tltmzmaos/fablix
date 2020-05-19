@@ -62,7 +62,7 @@ public class ListViewActivity extends Activity{
                                 e.printStackTrace();
                             }
                         }
-                        totalPage = (list.size() / num_item_page) + 1;
+                        totalPage = (int) Math.ceil(list.size() / num_item_page);
                         Log.d("TotalPageNum", String.valueOf(totalPage));
                         activateButtons(list);
                     }
