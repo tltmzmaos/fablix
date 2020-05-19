@@ -5,24 +5,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fablixandroid.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.util.Log;
-import android.support.v4.app.Fragment;
-
 import java.util.ArrayList;
 
 
 public class ListViewActivity extends Activity{
+
+    public int totalPage;
+    public int num_item_page = 20;
+    private int pageNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +34,15 @@ public class ListViewActivity extends Activity{
         RequestQueue mQueue = Volley.newRequestQueue(this);
         url += String.valueOf(getIntent().getExtras().get("query"));
 
+        pageNum = 0;
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
                         ArrayList<Movie> list = new ArrayList<Movie>();
+
                         for(int i=0; i<jsonArray.length(); i++){
                             try {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -59,7 +62,9 @@ public class ListViewActivity extends Activity{
                                 e.printStackTrace();
                             }
                         }
-                        updateList(list);
+                        totalPage = (list.size() / num_item_page) + 1;
+                        Log.d("TotalPageNum", String.valueOf(totalPage));
+                        activateButtons(list);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -69,6 +74,7 @@ public class ListViewActivity extends Activity{
         });
         mQueue.add(jsonArrayRequest);
     }
+
 
     public void updateList(ArrayList<Movie> list){
         MovieListViewAdapter adapter = new MovieListViewAdapter(list, this);
@@ -83,6 +89,54 @@ public class ListViewActivity extends Activity{
                 startActivity(intnt);
             }
         });
+    }
+
+    public void activateButtons(ArrayList<Movie> list){
+        Button prev = findViewById(R.id.prev);
+        Button next = findViewById(R.id.next);
+        TextView pg = findViewById(R.id.pg);
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pageNum > 0){
+                    pageNum--;
+                    Log.d("prevButtonclicked", String.valueOf(pageNum));
+                    ArrayList<Movie> pl = new ArrayList<>();
+                    for(int i=0; i<num_item_page; i++){
+                        if((pageNum*num_item_page+i) < list.size()){
+                            pl.add(list.get(pageNum*num_item_page+i));
+                        }
+                    }
+                    pg.setText(pageNum+1 + " of " + totalPage);
+                    updateList(pl);
+                }
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pageNum < totalPage-1){
+                    pageNum++;
+                    Log.d("nextButtonclicked", String.valueOf(pageNum));
+                    ArrayList<Movie> pl = new ArrayList<>();
+                    for(int i=0; i<num_item_page; i++){
+                        if((pageNum*num_item_page+i) < list.size()){
+                            pl.add(list.get(pageNum*num_item_page+i));
+                        }
+                    }
+                    pg.setText(pageNum+1 + " of " + totalPage);
+                    updateList(pl);
+                }
+            }
+        });
+        ArrayList<Movie> pl = new ArrayList<>();
+        for(int i=0; i<num_item_page; i++){
+            if((pageNum*num_item_page+i) < list.size()){
+                pl.add(list.get(pageNum*num_item_page+i));
+            }
+        }
+        pg.setText(pageNum+1 + " of " + totalPage);
+        updateList(pl);
     }
 
 }
