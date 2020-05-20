@@ -71,8 +71,6 @@ public class Login extends ActionBarActivity {
                     }else{
                         message.setText(jsonObject.getString("message"));
                         Log.d("login.success", response);
-                        //Intent listPage = new Intent(Login.this, ListViewActivity.class);
-                        //startActivity(listPage);
                         Intent searchPage = new Intent(Login.this, MainActivity.class);
                         startActivity(searchPage);
                     }
@@ -102,6 +100,16 @@ public class Login extends ActionBarActivity {
 
         // !important: queue.add is where the login request is actually sent
         queue.add(loginRequest);
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        message = findViewById(R.id.message);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        message.setText("");
+        username.setText("");
+        password.setText("");
     }
 }

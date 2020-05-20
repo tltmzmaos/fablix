@@ -63,7 +63,6 @@ public class ListViewActivity extends Activity{
                             }
                         }
                         totalPage = (int) Math.ceil(list.size() / num_item_page);
-                        Log.d("TotalPageNum", String.valueOf(totalPage));
                         activateButtons(list);
                     }
                 }, new Response.ErrorListener() {
@@ -74,7 +73,6 @@ public class ListViewActivity extends Activity{
         });
         mQueue.add(jsonArrayRequest);
     }
-
 
     public void updateList(ArrayList<Movie> list){
         MovieListViewAdapter adapter = new MovieListViewAdapter(list, this);

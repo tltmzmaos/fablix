@@ -42,4 +42,12 @@ public class MainActivity extends Activity {
             String query = intent.getStringExtra(SearchManager.QUERY);
         }
     }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        searchView = findViewById(R.id.search);
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+    }
 }
