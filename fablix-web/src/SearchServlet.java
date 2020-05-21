@@ -36,7 +36,7 @@ public class SearchServlet extends HttpServlet {
             for(int i=0; i<input_split.length; i++){
                 pr.append("'+"+ input_split[i] +"*'");
             }
-            pr.append("IN BOOLEAN MODE);");
+            pr.append("IN BOOLEAN MODE) AND ed(title, searchInput) <= 3;");
             PreparedStatement p_s = con.prepareStatement(String.valueOf(pr));
             ResultSet ft_rs = p_s.executeQuery();
 
