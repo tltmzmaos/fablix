@@ -28,7 +28,8 @@ public class ListViewActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
-        String url = "https://10.0.2.2:8443/fablix_pj_war_exploded/search?searchBar=";
+        //String url = "https://10.0.2.2:8443/fablix_pj_war_exploded/search?searchBar=";
+        String url = "https://ec2-13-56-236-95.us-west-1.compute.amazonaws.com:8443/fablix-pj/search?searchBar=";
         //this should be retrieved from the database and the backend server
 
         RequestQueue mQueue = Volley.newRequestQueue(this);
