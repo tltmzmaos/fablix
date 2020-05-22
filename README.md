@@ -1,7 +1,7 @@
-1. Demo video URL: https://drive.google.com/file/d/1cDfSguG4CGMLZMAyXcsrudIbf_FFRmJK/view
+- Demo video URL: https://drive.google.com/file/d/1cDfSguG4CGMLZMAyXcsrudIbf_FFRmJK/view
 
-2. Deploy Instructions
-    1. git clone https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25.git
+- Deploy Instructions
+    1. git clone https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191.git
     
     Creating database(moviedb) from files in repository
     
@@ -41,27 +41,11 @@
     
     
 
-3. Prepared Statements:  
-[AddMovieServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/AddMovieServlet.java)  
-[AdvancedSearchServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/AdvancedSearchServlet.java)  
-[BrowseServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/BrowseServlet.java)  
-[CheckoutServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/CheckoutServlet.java)  
-[DashboardServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/DashboardServlet.java)  
-[EmployeeLoginServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/EmployeeLoginServlet.java)  
-[LoginServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/LoginServlet.java)  
-[MovieListServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/MovieListServlet.java)  
-[NewStarServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/NewStarServlet.java)  
-[SearchServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/SearchServlet.java)  
-[SingleMovieServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/SingleMovieServlet.java)  
-[SingleStarServlet](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/src/SingleStarServlet.java)  
+- Fuzzy Search implementation  
+"OR" clause is added to the FullText search query to find cases where the return value of ed function is less than ot equal to 2.  
+When the return value of the ed function was set to less than or eqaul to 1, there was not much difference in the search result with the given data.  
+When it was set to more than 3, the search result was too different.  
   
-4. Two parsing time optimization strategies
-[Report.txt](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-25/blob/master/Report.txt) 
-  
-5. Contribution:
+- Contribution:
 
-Jongmin Lee: reCAPTCHA, Dashboard, Add star
-
-Joey Hwang: Add movie, Stored procedure
-
-These are the main parts we split up, but we checked each other's parts and edited them.
+Jongmin Lee: Autocomplete, Android, Fuzzy Search
