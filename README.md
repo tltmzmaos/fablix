@@ -43,7 +43,7 @@
 
 - Fuzzy Search implementation  
   
-"OR" clause is added to the FullText search query to find cases where the return value of ed function is less than ot equal to 2.  
+"OR" clause is added to the FullText search query to find cases where the return value of ed function is less than or equal to 2.  
 SELECT id FROM movies WHERE MATCH (title) AGAINST ("Search Input" IN BOOLEAN MODE) OR ed(title, ?) <= 2;  
   
 When the return value of the ed function was set to less than or eqaul to 1, there was not much difference in the search result with the given data. When it was set to more than 3, the search result was too different.  
