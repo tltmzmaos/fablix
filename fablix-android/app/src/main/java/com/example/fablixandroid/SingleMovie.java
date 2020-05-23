@@ -22,7 +22,7 @@ public class SingleMovie extends Activity {
         setContentView(R.layout.singlemovie);
 
         //String url = "https://10.0.2.2:8443/fablix_pj_war_exploded/single-movie?id=";
-        String url = "https://ec2-13-57-26-174.us-west-1.compute.amazonaws.com:8443/fablix-pj/single-movie?id=";
+        String url = "https://ec2-13-57-191-101.us-west-1.compute.amazonaws.com:8443/fablix-pj/single-movie?id=";
 
         RequestQueue mQueue = Volley.newRequestQueue(this);
         url += String.valueOf(getIntent().getExtras().get("singleMovie"));

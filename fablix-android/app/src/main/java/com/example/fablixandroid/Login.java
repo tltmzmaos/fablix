@@ -43,7 +43,7 @@ public class Login extends ActionBarActivity {
          * **/
         //url = "https://10.0.2.2:8443/cs122b_spring20_project2_login_cart_example_war/api/";
         //url = "https://10.0.2.2:8443/fablix_pj_war_exploded/";
-        url = "https://ec2-13-57-26-174.us-west-1.compute.amazonaws.com:8443/fablix-pj/";
+        url = "https://ec2-13-57-191-101.us-west-1.compute.amazonaws.com:8443/fablix-pj/";
         //assign a listener to call a function to handle the user request when clicking a button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
