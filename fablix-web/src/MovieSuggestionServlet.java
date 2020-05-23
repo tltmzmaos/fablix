@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @WebServlet("/movie-suggestion")
@@ -20,8 +21,8 @@ public class MovieSuggestionServlet extends HttpServlet {
     @Resource(name = "jdbc/moviedb")
     private DataSource dataSource;
 
-    HashMap<String, String> titleMap = new HashMap<>();
-
+    //HashMap<String, String> titleMap = new HashMap<>();
+    ArrayList<HashMap<String, String>> titleList = new ArrayList<>();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -32,20 +33,16 @@ public class MovieSuggestionServlet extends HttpServlet {
         try{
             Connection con = dataSource.getConnection();
             JsonArray jsonArray = new JsonArray();
-            titleMap = getMap(con);
-            if(titleMap.isEmpty() || searchInput.length() < 3){
+            titleList = getMap(con, searchInput);
+            if(titleList.isEmpty() || searchInput.length() < 3){
                 out.write(jsonArray.toString());
                 return;
-            }
-            int count = 0;
-            for(String i : titleMap.keySet()){
-                String title = titleMap.get(i);
-                if(title.toLowerCase().contains(searchInput)){
-                    if(count == 10){
-                        break;
+            }else{
+                for(int i=0; i<titleList.size(); i++){
+                    for(String j : titleList.get(i).keySet()){
+                        String title = titleList.get(i).get(j);
+                        jsonArray.add(generateJsonObject(j, title));
                     }
-                    jsonArray.add(generateJsonObject(i, title));
-                    count++;
                 }
             }
             out.write(jsonArray.toString());
@@ -57,24 +54,40 @@ public class MovieSuggestionServlet extends HttpServlet {
             response.sendError(500, e.getMessage());
         }
     }
-
-    private static HashMap<String, String> getMap(Connection con){
-        HashMap<String, String> temp = new HashMap<String, String>();
+    private static ArrayList<HashMap<String, String>> getMap(Connection con, String searchInput){
+        ArrayList<HashMap<String, String>> rturn = new ArrayList<>();
         try{
-            String ft_search = "SELECT id, title FROM movies;";
-            PreparedStatement ft_st = con.prepareStatement(ft_search);
-            ResultSet ft_rs = ft_st.executeQuery();
+
+            String[] input_split = searchInput.split(" ");
+            String prefix_query = "SELECT id, title FROM movies WHERE MATCH (title) AGAINST (";
+            StringBuffer pr = new StringBuffer(prefix_query);
+            for(int i=0; i<input_split.length; i++){
+                pr.append("'+"+ input_split[i] +"*'");
+            }
+            pr.append("IN BOOLEAN MODE) LIMIT 10;");
+            PreparedStatement p_s = con.prepareStatement(String.valueOf(pr));
+            ResultSet ft_rs = p_s.executeQuery();
 
             while(ft_rs.next()){
-                String new_title = ft_rs.getString("title");
-                String new_id = ft_rs.getString("id");
-                temp.put(new_id, new_title);
+                String query = "select id, title from movies where id=?;";
+                PreparedStatement statement = con.prepareStatement(query);
+                statement.setString(1, ft_rs.getString("id"));
+                ResultSet rs = statement.executeQuery();
+
+                while(rs.next()){
+                    HashMap<String, String> temp = new HashMap<String, String>();
+                    String new_title = rs.getString("title");
+                    String new_id = rs.getString("id");
+                    temp.put(new_id, new_title);
+                    rturn.add(temp);
+                }
+
             }
             ft_rs.close();
         }catch (Exception e){
             System.out.println(e.toString());
         }
-        return temp;
+        return rturn;
     }
 
     private static JsonObject generateJsonObject(String id, String title) {
