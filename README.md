@@ -1,4 +1,4 @@
-- Demo video URL: https://drive.google.com/file/d/1cDfSguG4CGMLZMAyXcsrudIbf_FFRmJK/view
+- Demo video URL: https://drive.google.com/file/d/1gsnCY2ZPS-uDZHLMPFrLr1PVlWyW_aOo/view?usp=sharing
 
 - Deploy Instructions
     1. git clone https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191.git
