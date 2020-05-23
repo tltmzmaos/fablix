@@ -50,4 +50,4 @@ When the return value of the ed function was set to less than or eqaul to 1, the
    
 - Contribution:
 
-Jongmin Lee: Autocomplete, Android, Fuzzy Search
+Jongmin Lee: Full-text Search, Autocomplete, Android, Fuzzy Search
