@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +20,9 @@ import java.util.HashMap;
 
 @WebServlet("/movie-suggestion")
 public class MovieSuggestionServlet extends HttpServlet {
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    // Single connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     //HashMap<String, String> titleMap = new HashMap<>();
     ArrayList<HashMap<String, String>> titleList = new ArrayList<>();
@@ -31,9 +34,28 @@ public class MovieSuggestionServlet extends HttpServlet {
         String searchInput = request.getParameter("query").toLowerCase();
         PrintWriter out = response.getWriter();
         try{
-            Connection con = dataSource.getConnection();
+            // Single connection
+            // Connection con = dataSource.getConnection();
+
+            // Connection pooling
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            if (ds == null)
+                out.println("ds is null.");
+            Connection dbcon = ds.getConnection();
+            if (dbcon == null)
+                out.println("dbcon is null.");
+
             JsonArray jsonArray = new JsonArray();
-            titleList = getMap(con, searchInput);
+            // Single connection
+            // titleList = getMap(con, searchInput);
+
+            // Connection pooling
+            titleList = getMap(dbcon, searchInput);
+
             if(titleList.isEmpty() || searchInput.length() < 3){
                 out.write(jsonArray.toString());
                 return;
@@ -47,7 +69,12 @@ public class MovieSuggestionServlet extends HttpServlet {
             }
             out.write(jsonArray.toString());
             response.setStatus(200);
-            con.close();
+            // Single connection
+            // con.close();
+
+            // Connection pooling
+            dbcon.close();
+
             return;
         }catch (Exception e){
             System.out.println(e.toString());

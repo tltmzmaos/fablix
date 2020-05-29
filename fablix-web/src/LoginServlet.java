@@ -1,4 +1,6 @@
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -6,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +21,12 @@ import com.google.gson.JsonObject;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    // Single Connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
@@ -29,15 +34,35 @@ public class LoginServlet extends HttpServlet {
         String databaseUserEamil = "";
         String databaseUserPassword = "";
 
+        PrintWriter out = response.getWriter();
 
         System.out.println("id: "+username + "\npassword: "+password);
         String userDevice = request.getHeader("User-Agent");
         if(userDevice.contains("Android")){
             System.out.println("This is from Android");
             try {
-                Connection con = dataSource.getConnection();
+                // Single Connection
+//                Connection con = dataSource.getConnection();
+
+                // Connection Pooling
+                Context initCtx = new InitialContext();
+                Context envCtx = (Context) initCtx.lookup("java:comp/env");
+                if (envCtx == null)
+                    out.println("envCtx is NULL");
+                DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+                if (ds == null)
+                    out.println("ds is null.");
+                Connection dbcon = ds.getConnection();
+                if (dbcon == null)
+                    out.println("dbcon is null.");
+
                 String query = "select * from customers where email=\"" + username +"\";";
-                PreparedStatement statement = con.prepareStatement(query);
+                // Single Connection
+//                PreparedStatement statement = con.prepareStatement(query);
+
+                // Connection Pooling
+                PreparedStatement statement = dbcon.prepareStatement(query);
+
                 ResultSet rs = statement.executeQuery();
 
                 JsonObject responseJsonObject = new JsonObject();
@@ -62,11 +87,15 @@ public class LoginServlet extends HttpServlet {
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                 }
-                response.getWriter().write(responseJsonObject.toString());
+                out.write(responseJsonObject.toString());
 
                 rs.close();
                 statement.close();
-                con.close();
+                // Single Connection
+//                con.close();
+
+                // Connection Pooling
+                dbcon.close();
 
             }catch(Exception e){
                 System.out.println(e.toString());
@@ -86,9 +115,28 @@ public class LoginServlet extends HttpServlet {
             }
 
             try {
-                Connection con = dataSource.getConnection();
+                // Single Connection
+                //Connection con = dataSource.getConnection();
+
+                // Connection Pooling
+                Context initCtx = new InitialContext();
+                Context envCtx = (Context) initCtx.lookup("java:comp/env");
+                if (envCtx == null)
+                    out.println("envCtx is NULL");
+                DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+                if (ds == null)
+                    out.println("ds is null.");
+                Connection dbcon = ds.getConnection();
+                if (dbcon == null)
+                    out.println("dbcon is null.");
+
                 String query = "select * from customers where email=\"" + username +"\";";
-                PreparedStatement statement = con.prepareStatement(query);
+
+                // Single Connection
+                //PreparedStatement statement = con.prepareStatement(query);
+
+                // Connection Pooling
+                PreparedStatement statement = dbcon.prepareStatement(query);
                 ResultSet rs = statement.executeQuery();
 
                 JsonObject responseJsonObject = new JsonObject();
@@ -113,16 +161,21 @@ public class LoginServlet extends HttpServlet {
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
                 }
-                response.getWriter().write(responseJsonObject.toString());
+                out.write(responseJsonObject.toString());
 
                 rs.close();
                 statement.close();
-                con.close();
+                // Single Connection
+                //con.close();
+
+                // Connection Pooling
+                dbcon.close();
 
             }catch(Exception e){
                 System.out.println(e.toString());
             }
         }
+        out.close();
 
     }
 

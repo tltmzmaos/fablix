@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +19,9 @@ import java.sql.ResultSet;
 
 @WebServlet(name = "AdvancedSearchServlet", urlPatterns = "/advanced-search")
 public class AdvancedSearchServlet extends HttpServlet {
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    // Single connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
@@ -33,7 +36,20 @@ public class AdvancedSearchServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try{
-            Connection con = dataSource.getConnection();
+            // Single connection
+            // Connection con = dataSource.getConnection();
+
+            // Connection pooling
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            if (ds == null)
+                out.println("ds is null.");
+            Connection dbcon = ds.getConnection();
+            if (dbcon == null)
+                out.println("dbcon is null.");
 
             String query = "select gs.id, gs.title, gs.year, gs.director, gs.genres, gs.genreId, gs.stars, gs.starId, rating\n" +
                     "from\n" +
@@ -56,7 +72,12 @@ public class AdvancedSearchServlet extends HttpServlet {
                     "ratings.movieId = gs.id\n" +
                     ";";
 
-            PreparedStatement statement = con.prepareStatement(query);
+            // Single connection
+            // PreparedStatement statement = con.prepareStatement(query);
+
+            // Connection pooling
+            PreparedStatement statement = dbcon.prepareStatement(query);
+
             statement.setString(1, "%" + titleInput + "%");
             statement.setString(2, "%" + yearInput + "%");
             statement.setString(3, "%" + directorInput + "%");
@@ -90,7 +111,12 @@ public class AdvancedSearchServlet extends HttpServlet {
             response.setStatus(200);
             resultSets.close();
             statement.close();
-            con.close();
+
+            // Single connection
+            //con.close();
+
+            // Connection pooling
+            dbcon.close();
 
         }catch (Exception e){
             JsonObject jsonObject = new JsonObject();

@@ -1,4 +1,6 @@
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +18,9 @@ import com.google.gson.JsonObject;
 
 @WebServlet(name = "SearchServlet", urlPatterns = "/search")
 public class SearchServlet extends HttpServlet {
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    // Single Connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
@@ -28,7 +31,21 @@ public class SearchServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         try {
-            Connection con = dataSource.getConnection();
+            // Single Connection
+            //Connection con = dataSource.getConnection();
+
+            // Connection Pooling
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            if (ds == null)
+                out.println("ds is null.");
+            Connection dbcon = ds.getConnection();
+            if (dbcon == null)
+                out.println("dbcon is null.");
+
             String[] input_split = searchInput.split(" ");
 
             String prefix_query = "SELECT id FROM movies WHERE MATCH (title) AGAINST (";
@@ -36,9 +53,24 @@ public class SearchServlet extends HttpServlet {
             for(int i=0; i<input_split.length; i++){
                 pr.append("'+"+ input_split[i] +"*'");
             }
-            pr.append("IN BOOLEAN MODE) OR ed(title, ?) <= 2;");
-            PreparedStatement p_s = con.prepareStatement(String.valueOf(pr));
-            p_s.setString(1, searchInput);
+            pr.append("IN BOOLEAN MODE);");
+            // Fuzzy search
+//            String[] input_split = searchInput.split(" ");
+//
+//            String prefix_query = "SELECT id FROM movies WHERE MATCH (title) AGAINST (";
+//            StringBuffer pr = new StringBuffer(prefix_query);
+//            for(int i=0; i<input_split.length; i++){
+//                pr.append("'+"+ input_split[i] +"*'");
+//            }
+//            pr.append("IN BOOLEAN MODE) OR ed(title, ?) <= 2;");
+
+            // Single Connection
+            //PreparedStatement p_s = con.prepareStatement(String.valueOf(pr));
+
+            // Connection Pooling
+            PreparedStatement p_s = dbcon.prepareStatement(String.valueOf(pr));
+
+            //p_s.setString(1, searchInput);
             ResultSet ft_rs = p_s.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
@@ -61,7 +93,13 @@ public class SearchServlet extends HttpServlet {
                         "LEFT JOIN ratings ON\n" +
                         "ratings.movieId = gs.id\n" +
                         ";";
-                PreparedStatement statement = con.prepareStatement(query);
+
+                // Single Connection
+                //PreparedStatement statement = con.prepareStatement(query);
+
+                // Connection Pooling
+                PreparedStatement statement = dbcon.prepareStatement(query);
+
                 statement.setString(1, ft_rs.getString("id"));
                 ResultSet rs = statement.executeQuery();
 
@@ -94,7 +132,12 @@ public class SearchServlet extends HttpServlet {
             response.setStatus(200);
             ft_rs.close();
             p_s.close();
-            con.close();
+
+            // Single Connection
+            //con.close();
+
+            // Connection Pooling
+            dbcon.close();
 
         } catch (Exception e) {
             JsonObject jsonObject = new JsonObject();

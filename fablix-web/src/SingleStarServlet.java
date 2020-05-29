@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,22 +18,41 @@ import java.sql.ResultSet;
 
 @WebServlet(name = "SingleStarServlet", urlPatterns = "/single-star")
 public class SingleStarServlet extends HttpServlet {
-
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+        // Single connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         String s = request.getParameter("id");
         try{
-            Connection con = dataSource.getConnection();
+            // Single connection
+            // Connection con = dataSource.getConnection();
+
+            // Connection pooling
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            if (ds == null)
+                out.println("ds is null.");
+            Connection dbcon = ds.getConnection();
+            if (dbcon == null)
+                out.println("dbcon is null.");
+
             String query = "select stars.id, stars.name, stars.birthYear ,GROUP_CONCAT(distinct movies.title) as title, group_concat(distinct movies.id) as movieId\n" +
                     "from stars, stars_in_movies, movies\n" +
                     "where stars.id = stars_in_movies.starId and\n" +
                     "stars_in_movies.movieId = movies.id and stars.id = ?\n" +
                     "group by stars.id;";
-            PreparedStatement statement = con.prepareStatement(query);
+            // Single connection
+            // PreparedStatement statement = con.prepareStatement(query);
+
+            // Connection pooling
+            PreparedStatement statement = dbcon.prepareStatement(query);
+
             statement.setString(1, s);
             ResultSet rs = statement.executeQuery();
             JsonArray jsonArray = new JsonArray();
@@ -55,7 +76,11 @@ public class SingleStarServlet extends HttpServlet {
             response.setStatus(200);
             rs.close();
             statement.close();
-            con.close();
+            // Single connection
+            // con.close();
+
+            // Connection pooling
+            dbcon.close();
         } catch (Exception e){
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("errorMessage", e.getMessage());

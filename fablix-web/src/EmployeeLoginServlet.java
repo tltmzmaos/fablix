@@ -2,6 +2,8 @@ import com.google.gson.JsonObject;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,8 +19,9 @@ import java.sql.ResultSet;
 
 @WebServlet(name = "EmployeeLoginServlet", urlPatterns = "/employeeLogin")
 public class EmployeeLoginServlet extends HttpServlet {
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    // Single connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("employeename");
@@ -26,16 +30,35 @@ public class EmployeeLoginServlet extends HttpServlet {
         String databaseUserEamil = "";
         String databaseUserPassword = "";
 
+        PrintWriter out = response.getWriter();
+
         System.out.println("id: "+username + "\npassword: "+password);
 
         try {
-            Connection con = dataSource.getConnection();
+            // Single connection
+            // Connection con = dataSource.getConnection();
+
+            // Connection pooling
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            if (ds == null)
+                out.println("ds is null.");
+            Connection dbcon = ds.getConnection();
+            if (dbcon == null)
+                out.println("dbcon is null.");
+
             String query = "select * from employees where email=\"" + username +"\";";
-            PreparedStatement statement = con.prepareStatement(query);
+            // Single connection
+            // PreparedStatement statement = con.prepareStatement(query);
+
+            // Connection pooling
+            PreparedStatement statement = dbcon.prepareStatement(query);
+
             ResultSet rs = statement.executeQuery();
-
             JsonObject responseJsonObject = new JsonObject();
-
             while(rs.next()) {
                 databaseUserEamil = rs.getString("email");
                 databaseUserPassword = rs.getString("password");
@@ -56,15 +79,20 @@ public class EmployeeLoginServlet extends HttpServlet {
                 responseJsonObject.addProperty("status", "success");
                 responseJsonObject.addProperty("message", "success");
             }
-            response.getWriter().write(responseJsonObject.toString());
+            out.write(responseJsonObject.toString());
 
             rs.close();
             statement.close();
-            con.close();
+            // Single connection
+            // con.close();
+
+            // Connection pooling
+            dbcon.close();
 
         }catch(Exception e){
             System.out.println(e.toString());
         }
+        out.close();
     }
 
     private static boolean verifyCredentials(String email, String password) throws Exception {

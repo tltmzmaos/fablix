@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +17,9 @@ import java.sql.*;
 
 @WebServlet(name = "DashboardServlet", urlPatterns = "/metadata")
 public class DashboardServlet extends HttpServlet {
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    // Single connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -27,15 +30,40 @@ public class DashboardServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try{
-            Connection con = dataSource.getConnection();
+            // Single connection
+            // Connection con = dataSource.getConnection();
+
+            // Connection pooling
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            if (ds == null)
+                out.println("ds is null.");
+            Connection dbcon = ds.getConnection();
+            if (dbcon == null)
+                out.println("dbcon is null.");
+
             JsonObject total = new JsonObject();
 
-            DatabaseMetaData dbms = con.getMetaData();
+            // Single connection
+            // DatabaseMetaData dbms = con.getMetaData();
+
+            // Connection pooling
+            DatabaseMetaData dbms = dbcon.getMetaData();
+
             ResultSet temp = dbms.getTables(null, null, null, new String[]{"TABLE"});
             while(temp.next()){
                 JsonArray jsonArray = new JsonArray();
                 String temp_query = "SELECT * FROM " + temp.getString("Table_NAME") + ";";
-                PreparedStatement temp_s = con.prepareStatement(temp_query);
+
+                // Single connection
+               //PreparedStatement temp_s = con.prepareStatement(temp_query);
+
+                // Connection pooling
+                PreparedStatement temp_s = dbcon.prepareStatement(temp_query);
+
                 ResultSet temp_rs = temp_s.executeQuery();
                 ResultSetMetaData temp_md = temp_rs.getMetaData();
 
@@ -57,7 +85,11 @@ public class DashboardServlet extends HttpServlet {
             out.write(total.toString());
             response.setStatus(200);
 
-            con.close();
+            // Single connection
+            // con.close();
+
+            // Connection pooling
+            dbcon.close();
 
         }catch (Exception e){
             System.out.println(e.toString());

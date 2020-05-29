@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,15 +20,30 @@ import java.util.Date;
 
 @WebServlet(name = "MovieListServlet", urlPatterns = "/movie-list")
 public class MovieListServlet extends HttpServlet{
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+
+    // Single Connection
+//    @Resource(name = "jdbc/moviedb")
+//    private DataSource dataSource;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
 
         try{
-            Connection con = dataSource.getConnection();
+            // Single Connection
+            //Connection con = dataSource.getConnection();
+
+            // Connection Pooling
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            if (ds == null)
+                out.println("ds is null.");
+            Connection dbcon = ds.getConnection();
+            if (dbcon == null)
+                out.println("dbcon is null.");
 
             String query = "select gs.id, gs.title, gs.year, gs.director, gs.genres, gs.genreId, gs.stars, gs.starId, rating\n" +
                     "from\n" +
@@ -45,7 +62,12 @@ public class MovieListServlet extends HttpServlet{
                     "ratings.movieId = gs.id\n" +
                     ";";
 
-            PreparedStatement statement = con.prepareStatement(query);
+            // Single Connection
+            //PreparedStatement statement = con.prepareStatement(query);
+
+            // Connection Pooling
+            PreparedStatement statement = dbcon.prepareStatement(query);
+
             ResultSet rs = statement.executeQuery();
             JsonArray jsonArray = new JsonArray();
             while(rs.next()){
@@ -73,7 +95,11 @@ public class MovieListServlet extends HttpServlet{
             response.setStatus(200);
             rs.close();
             statement.close();
-            con.close();
+            // Single Connection
+            //con.close();
+
+            // Connection pooling
+            dbcon.close();
         }catch(Exception e){
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("errorMessage", e.getMessage());
