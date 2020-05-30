@@ -42,7 +42,8 @@ public class AddMovieServlet extends HttpServlet {
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             if (envCtx == null)
                 out.println("envCtx is NULL");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            //DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/rw");
             if (ds == null)
                 out.println("ds is null.");
             Connection dbcon = ds.getConnection();

@@ -37,12 +37,14 @@ public class SingleMovieServlet extends HttpServlet{
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             if (envCtx == null)
                 out.println("envCtx is NULL");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            //DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/rw");
             if (ds == null)
                 out.println("ds is null.");
             Connection dbcon = ds.getConnection();
             if (dbcon == null)
                 out.println("dbcon is null.");
+            dbcon.setReadOnly(true);
 
             String query = "select mr.id, mr.title, mr.year, mr.director, mr.genre, mr.genreId, star.starId, star.starName, mr.rating from\n" +
                     "(select m.id, m.title, m.year, m.director, m.genre, m.genreId, rating from\n" +

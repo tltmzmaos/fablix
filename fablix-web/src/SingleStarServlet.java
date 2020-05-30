@@ -35,12 +35,14 @@ public class SingleStarServlet extends HttpServlet {
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             if (envCtx == null)
                 out.println("envCtx is NULL");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            //DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/rw");
             if (ds == null)
                 out.println("ds is null.");
             Connection dbcon = ds.getConnection();
             if (dbcon == null)
                 out.println("dbcon is null.");
+            dbcon.setReadOnly(true);
 
             String query = "select stars.id, stars.name, stars.birthYear ,GROUP_CONCAT(distinct movies.title) as title, group_concat(distinct movies.id) as movieId\n" +
                     "from stars, stars_in_movies, movies\n" +

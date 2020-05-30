@@ -44,12 +44,14 @@ public class AdvancedSearchServlet extends HttpServlet {
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             if (envCtx == null)
                 out.println("envCtx is NULL");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            //DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/rw");
             if (ds == null)
                 out.println("ds is null.");
             Connection dbcon = ds.getConnection();
             if (dbcon == null)
                 out.println("dbcon is null.");
+            dbcon.setReadOnly(true);
 
             String query = "select gs.id, gs.title, gs.year, gs.director, gs.genres, gs.genreId, gs.stars, gs.starId, rating\n" +
                     "from\n" +
