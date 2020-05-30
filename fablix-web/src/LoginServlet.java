@@ -123,13 +123,13 @@ public class LoginServlet extends HttpServlet {
                 Context envCtx = (Context) initCtx.lookup("java:comp/env");
                 if (envCtx == null)
                     out.println("envCtx is NULL");
-                //DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
-                DataSource ds = (DataSource) envCtx.lookup("jdbc/rw");
+                DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
                 if (ds == null)
                     out.println("ds is null.");
                 Connection dbcon = ds.getConnection();
                 if (dbcon == null)
                     out.println("dbcon is null.");
+                dbcon.setReadOnly(true);
 
                 String query = "select * from customers where email=\"" + username +"\";";
 
@@ -147,14 +147,14 @@ public class LoginServlet extends HttpServlet {
                     databaseUserPassword = rs.getString("password");
                 }
 
-                System.out.println(verifyCredentials(username, password));
+                //System.out.println(verifyCredentials(username, password));
 
                 if(databaseUserEamil==""){
                     responseJsonObject.addProperty("status", "fail");
                     responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
                 }
-                //else if(!password.equals(databaseUserPassword)){
-                else if(!verifyCredentials(username, password)){
+                else if(!password.equals(databaseUserPassword)){
+                //else if(!verifyCredentials(username, password)){
                     responseJsonObject.addProperty("status", "fail");
                     responseJsonObject.addProperty("message", "incorrect password");
                 }else{
