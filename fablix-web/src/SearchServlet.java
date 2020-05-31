@@ -149,13 +149,15 @@ public class SearchServlet extends HttpServlet {
             dbcon.close();
             long tsend = System.nanoTime();
             long tstotaltime = tsend - tsstart;
-            System.out.println("TS: " + tstotaltime + ", TS: " + tjtotal);
-            System.out.println(getServletContext().getRealPath("/"));
             String filePath = getServletContext().getRealPath("/");
-            String xmlfilePath = filePath + "log_time.txt";
-            FileWriter myFile = new FileWriter(xmlfilePath, true);
-            myFile.write("TS: " + tstotaltime + ", TS: " + tjtotal +"\n");
-            myFile.close();
+            String tjfilePath = filePath + "tj_log.txt";
+            String tsfilePath = filePath + "ts_log.txt";
+            FileWriter tjFile = new FileWriter(tjfilePath, true);
+            FileWriter tsFile = new FileWriter(tsfilePath, true);
+            tjFile.write(tjtotal +"\n");
+            tsFile.write(tstotaltime+"\n");
+            tjFile.close();
+            tsFile.close();
 
         } catch (Exception e) {
             JsonObject jsonObject = new JsonObject();
