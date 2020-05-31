@@ -7,12 +7,28 @@
 <!--              type="javax.sql.DataSource"-->
 <!--              username="mytestuser"-->
 <!--              password="mypassword"-->
-<!--              url="jdbc:mysql://localhost:3306/moviedb"/>-->
+<!--              url="jdbc:mysql://54.183.232.255:3306/moviedb"/>-->
 
     <!-- Connection pooling -->
+
     <Resource name="jdbc/moviedb" auth="Container" type="javax.sql.DataSource"
               maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="mytestuser"
               password="mypassword" driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/moviedb?autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true"/>
+
+    <Resource name="jdbc/moviedbreadwrite" auth="Container" type="javax.sql.DataSource"
+              maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="mytestuser"
+              password="mypassword" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://52.53.203.43:3306/moviedb?autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true"/>
+
+    <Resource name="jdbc/moviedbreadonly" auth="Container" type="javax.sql.DataSource"
+              maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="mytestuser"
+              password="mypassword" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://54.183.232.255:3306/moviedb?autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true"/>
+
+<!--    <Resource name="jdbc/moviedb" auth="Container" type="javax.sql.DataSource"-->
+<!--              maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="mytestuser"-->
+<!--              password="mypassword" driverClassName="com.mysql.jdbc.ReplicationDriver"-->
+<!--              url="jdbc:mysql:replication://52.53.203.43:3306, 54.183.232.255:3306/moviedb?autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true"/>-->
 
 </Context>

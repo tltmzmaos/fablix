@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +25,7 @@ public class SearchServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long tsstart = System.nanoTime();
         response.setContentType("application/json");
         String searchInput = request.getParameter("searchBar").toLowerCase();
 
@@ -39,7 +39,7 @@ public class SearchServlet extends HttpServlet {
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             if (envCtx == null)
                 out.println("envCtx is NULL");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedbreadonly");
             if (ds == null)
                 out.println("ds is null.");
             Connection dbcon = ds.getConnection();
@@ -72,7 +72,10 @@ public class SearchServlet extends HttpServlet {
             PreparedStatement p_s = dbcon.prepareStatement(String.valueOf(pr));
 
             //p_s.setString(1, searchInput);
+            long tjstart = System.nanoTime();
             ResultSet ft_rs = p_s.executeQuery();
+            long tjend = System.nanoTime();
+            long tjtotal = tjend - tjstart;
 
             JsonArray jsonArray = new JsonArray();
             while (ft_rs.next()) {
@@ -102,7 +105,11 @@ public class SearchServlet extends HttpServlet {
                 PreparedStatement statement = dbcon.prepareStatement(query);
 
                 statement.setString(1, ft_rs.getString("id"));
+                long tempStart = System.nanoTime();
                 ResultSet rs = statement.executeQuery();
+                long tempEnd = System.nanoTime();
+                tjtotal = tjtotal + (tempEnd-tempStart);
+
 
                 while (rs.next()) {
                     String id = rs.getString("gs.id");
@@ -129,6 +136,7 @@ public class SearchServlet extends HttpServlet {
                 rs.close();
                 statement.close();
             }
+
             out.write(jsonArray.toString());
             response.setStatus(200);
             ft_rs.close();
@@ -139,6 +147,15 @@ public class SearchServlet extends HttpServlet {
 
             // Connection Pooling
             dbcon.close();
+            long tsend = System.nanoTime();
+            long tstotaltime = tsend - tsstart;
+            System.out.println("TS: " + tstotaltime + ", TS: " + tjtotal);
+            System.out.println(getServletContext().getRealPath("/"));
+            String filePath = getServletContext().getRealPath("/");
+            String xmlfilePath = filePath + "log_time.txt";
+            FileWriter myFile = new FileWriter(xmlfilePath, true);
+            myFile.write("TS: " + tstotaltime + ", TS: " + tjtotal +"\n");
+            myFile.close();
 
         } catch (Exception e) {
             JsonObject jsonObject = new JsonObject();

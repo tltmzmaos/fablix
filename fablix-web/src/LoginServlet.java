@@ -123,7 +123,7 @@ public class LoginServlet extends HttpServlet {
                 Context envCtx = (Context) initCtx.lookup("java:comp/env");
                 if (envCtx == null)
                     out.println("envCtx is NULL");
-                DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+                DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedbreadonly");
                 if (ds == null)
                     out.println("ds is null.");
                 Connection dbcon = ds.getConnection();
@@ -153,8 +153,8 @@ public class LoginServlet extends HttpServlet {
                     responseJsonObject.addProperty("status", "fail");
                     responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
                 }
-                else if(!password.equals(databaseUserPassword)){
-                //else if(!verifyCredentials(username, password)){
+                //else if(!password.equals(databaseUserPassword)){
+                else if(!verifyCredentials(username, password)){
                     responseJsonObject.addProperty("status", "fail");
                     responseJsonObject.addProperty("message", "incorrect password");
                 }else{
