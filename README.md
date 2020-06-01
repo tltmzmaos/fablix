@@ -59,11 +59,15 @@
         [SingleMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleMovieServlet.java)  
         [SingleStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleStarServlet.java)  
         
-        
         - #### Explain how the Connection Pooling is utilized in the Fabflix code:  
+        Master and Slave data resources are configured in Context.xml.  
+        The Pool was set by setting maxTotal, maxIdle, and maxWaitMills inside the Resource.  
         
           
         - #### Explain how Connection Pooling works with two backend SQL:  
+        In Context.xml, Master and Slave datasources are defined along with their IP addresses of each instances.  
+        Since the connection pooling is set for both data sources, two different backend SQL operations can be performed by making each request connects to the right SQL instance.
+        
         
     - # Master/Slave  
         - #### Filename/path of all files routing queries to Master/Slave:  
@@ -79,10 +83,12 @@
         [SearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SearchServlet.java)  
         [SingleMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleMovieServlet.java)  
         [SingleStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleStarServlet.java)  
-    
         
         - #### How read/write requests were routed to Master/Salve SQL:  
-          
+        Two DataSources (Master and Slave) are defined in Context.xml.  
+        The servlets which have data writing works are set to connect to the Master datasource.
+        The other servlets which have only reading data works are set to connect to the Slave datasource.
+         
           
         - # JMeter TS/TJ Time Logs  
         - #### Instruction of how to use the 'log_processing.*' script:  
