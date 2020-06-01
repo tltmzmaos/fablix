@@ -46,7 +46,7 @@
     
     - # Connection Pooling  
         - #### Filename/path of all file using JDBC Connection Pooling:  
-        [web.xml](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/tree/master/fablix-web/web/WEB-INF)  
+        [Context.xml](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/web/META-INF/context.xml)  
         [AddMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AddMovieServlet.java)  
         [AdvancedSearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AdvancedSearchServlet.java)  
         [BrowseServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/BrowseServlet.java)  
@@ -62,13 +62,28 @@
         
         - #### Explain how the Connection Pooling is utilized in the Fabflix code:  
         
+          
         - #### Explain how Connection Pooling works with two backend SQL:  
         
     - # Master/Slave  
         - #### Filename/path of all files routing queries to Master/Slave:  
+        [Context.xml](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/web/META-INF/context.xml)  
+        [AddMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AddMovieServlet.java)  
+        [AdvancedSearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AdvancedSearchServlet.java)  
+        [BrowseServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/BrowseServlet.java)  
+        [CheckoutServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/CheckoutServlet.java)  
+        [LoginServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/LoginServlet.java)  
+        [MovieListServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/MovieListServlet.java)  
+        [MovieSuggestionServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/MovieSuggestionServlet.java)  
+        [NewStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/NewStarServlet.java)  
+        [SearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SearchServlet.java)  
+        [SingleMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleMovieServlet.java)  
+        [SingleStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleStarServlet.java)  
+    
         
         - #### How read/write requests were routed to Master/Salve SQL:  
-        
+          
+          
         - # JMeter TS/TJ Time Logs  
         - #### Instruction of how to use the 'log_processing.*' script:  
         
