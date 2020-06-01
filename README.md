@@ -86,7 +86,7 @@
         
         - #### How read/write requests were routed to Master/Salve SQL:  
         Two DataSources (Master and Slave) are defined in Context.xml.  
-        The servlets which have data writing works are set to connect to the Master datasource.
+        The servlets which have data writing works are set to connect to the Master datasource.  
         The other servlets which have only reading data works are set to connect to the Slave datasource.
          
           
