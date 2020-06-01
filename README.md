@@ -1,6 +1,9 @@
-- Demo video URL: https://drive.google.com/file/d/1o1EdTfHy3DeSmv4CJ7Oho7vrEF3B_yx8/view?usp=sharing
-
-- Deploy Instructions
+- # General  
+    - #### Team# : TEAM-191  
+      
+    - #### Project 5 Video Demo Link:  
+      
+    - #### Instruction of deployment:
     1. git clone https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191.git
     
     Creating database(moviedb) from files in repository
@@ -28,7 +31,6 @@
     
     mysql> source /path/to/movie-data.sql
     
-
     2. inside your repo, where the pom.xml file locates, build the war file:
     mvn package
     3. show tomcat web apps, it should NOT have the war file yet:
@@ -39,15 +41,32 @@
     ls -lah /path/to/tomcat/webapps
     6. open the tomcat manager page and click on fablix-pi, which will show the fablix website
     
+    - #### Collaborations and Work Distribution:  
+    Jongmin Lee: Connection Pooling, Master/slave, Loadbalancing
     
-
-- Fuzzy Search implementation  
-  
-"OR" clause is added to the FullText search query to find cases where the return value of ed function is less than or equal to 2.  
-SELECT id FROM movies WHERE MATCH (title) AGAINST ("Search Input" IN BOOLEAN MODE) OR ed(title, ?) <= 2;  
-  
-When the return value of the ed function was set to less than or eqaul to 1, there was not much difference in the search result with the given data. When it was set to more than 3, the search result was too different.  
-   
-- Contribution:
-
-Jongmin Lee: Full-text Search, Autocomplete, Android, Fuzzy Search
+    - # Connection Pooling  
+        - #### Filename/path of all file using JDBC Connection Pooling:  
+        [web.xml](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/tree/master/fablix-web/web/WEB-INF)  
+        [AddMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AddMovieServlet.java)  
+        [AdvancedSearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AdvancedSearchServlet.java)  
+        [BrowseServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/BrowseServlet.java)  
+        [CheckoutServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/CheckoutServlet.java)  
+        [LoginServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/LoginServlet.java)  
+        [MovieListServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/MovieListServlet.java)  
+        [MovieSuggestionServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/MovieSuggestionServlet.java)  
+        [NewStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/NewStarServlet.java)  
+        [SearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SearchServlet.java)  
+        [SingleMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleMovieServlet.java)  
+        [SingleStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleStarServlet.java)  
+        
+        
+        - #### Explain how the Connection Pooling is utilized in the Fabflix code:  
+        
+        - #### Explain how Connection Pooling works with two backend SQL:  
+        
+    - # Master/Slave  
+        - #### Filename/path of all files routing queries to Master/Slave:  
+        
+        - #### How read/write requests were routed to Master/Salve SQL:  
+        
+    
