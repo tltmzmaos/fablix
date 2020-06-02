@@ -103,16 +103,16 @@ public class LoginServlet extends HttpServlet {
         }
         else{
             System.out.println("This is not from Android");
-            try{
-                RecaptchaVerify.verify(gRecaptchaResponse);
-            }catch (Exception e){
-                System.out.println(e.toString());
-                JsonObject responseJsonObject = new JsonObject();
-                responseJsonObject.addProperty("status", "fail");
-                responseJsonObject.addProperty("message", "Missed Rechaptcha");
-                response.getWriter().write(responseJsonObject.toString());
-                return;
-            }
+//            try{
+//                RecaptchaVerify.verify(gRecaptchaResponse);
+//            }catch (Exception e){
+//                System.out.println(e.toString());
+//                JsonObject responseJsonObject = new JsonObject();
+//                responseJsonObject.addProperty("status", "fail");
+//                responseJsonObject.addProperty("message", "Missed Rechaptcha");
+//                response.getWriter().write(responseJsonObject.toString());
+//                return;
+//            }
 
             try {
                 // Single Connection

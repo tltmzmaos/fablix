@@ -44,8 +44,8 @@
     - #### Collaborations and Work Distribution:  
     Jongmin Lee: Connection Pooling, Master/slave, Loadbalancing
     
-    - # Connection Pooling  
-        - #### Filename/path of all file using JDBC Connection Pooling:  
+- # Connection Pooling  
+    - #### Filename/path of all file using JDBC Connection Pooling:  
         [Context.xml](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/web/META-INF/context.xml)  
         [AddMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AddMovieServlet.java)  
         [AdvancedSearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AdvancedSearchServlet.java)  
@@ -59,18 +59,18 @@
         [SingleMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleMovieServlet.java)  
         [SingleStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleStarServlet.java)  
         
-        - #### Explain how the Connection Pooling is utilized in the Fabflix code:  
+    - #### Explain how the Connection Pooling is utilized in the Fabflix code:  
         Master and Slave data resources are configured in Context.xml.  
         The Pool was set by setting maxTotal, maxIdle, and maxWaitMills inside the Resource.  
         
           
-        - #### Explain how Connection Pooling works with two backend SQL:  
+    - #### Explain how Connection Pooling works with two backend SQL:  
         In Context.xml, Master and Slave datasources are defined along with their IP addresses of each instances.  
         Since the connection pooling is set for both data sources, two different backend SQL operations can be performed by making each request connects to the right SQL instance.
         
         
-    - # Master/Slave  
-        - #### Filename/path of all files routing queries to Master/Slave:  
+- # Master/Slave  
+    - #### Filename/path of all files routing queries to Master/Slave:  
         [Context.xml](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/web/META-INF/context.xml)  
         [AddMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AddMovieServlet.java)  
         [AdvancedSearchServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/AdvancedSearchServlet.java)  
@@ -84,24 +84,24 @@
         [SingleMovieServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleMovieServlet.java)  
         [SingleStarServlet.java](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/fablix-web/src/SingleStarServlet.java)  
         
-        - #### How read/write requests were routed to Master/Salve SQL:  
+    - #### How read/write requests were routed to Master/Salve SQL:  
         Two DataSources (Master and Slave) are defined in Context.xml.  
         The servlets which have data writing works are set to connect to the Master datasource.  
         The other servlets which have only reading data works are set to connect to the Slave datasource.
          
           
-        - # JMeter TS/TJ Time Logs  
-        - #### Instruction of how to use the 'log_processing.*' script:  
+- # JMeter TS/TJ Time Logs  
+    - #### Instruction of how to use the 'log_processing.*' script:  
         
-        - # JMeter TS/TJ Time Measurement Report  
-        | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
+- # JMeter TS/TJ Time Measurement Report  
+    | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
         |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
         | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
         | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
         | Case 3: HTTPS/10 threads                       | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
         | Case 4: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
 
-        | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
+    | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
         |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
         | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
         | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
