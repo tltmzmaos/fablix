@@ -115,6 +115,6 @@
 
     | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
     |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-    | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
-    | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
+    | Case 1: HTTP/1 thread                          | ![](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/img/scaled_case1.png)   | 27                         | 2338675.77                                  | 1334829.63                        | ??           |
+    | Case 2: HTTP/10 threads                        | ![](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/img/scaled_case2.png)   | 30                         | 4063917.93                                  | 2232441.62                        | ??           |
     | Case 3: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??         
