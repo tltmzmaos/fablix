@@ -108,10 +108,10 @@
 - # JMeter TS/TJ Time Measurement Report  
   | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
     |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-    | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | 28                         | 1043974.91                                  | 772841.78                        | ??           |
-    | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | 28                         | 2530458.66                                  | 1304581.47                        | ??           |
-    | Case 3: HTTPS/10 threads                       | ![](path to image in img/)   | 39                         | 8103624.07                                  | 5185095.66                       | ??           |
-    | Case 4: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | 27                         | 2602723.22                                  | 1332368.04                        | ??           |
+    | Case 1: HTTP/1 thread                          | ![Link](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/img/single_case1.png)   | 28                         | 1043974.91                                  | 772841.78                        | ??           |
+    | Case 2: HTTP/10 threads                        | ![Link](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/img/single_case2.png)   | 28                         | 2530458.66                                  | 1304581.47                        | ??           |
+    | Case 3: HTTPS/10 threads                       | ![Link](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/img/single_case3.png)   | 39                         | 8103624.07                                  | 5185095.66                       | ??           |
+    | Case 4: HTTP/10 threads/No connection pooling  | ![Link](https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191/blob/master/img/single_case4.png)   | 27                         | 2602723.22                                  | 1332368.04                        | ??           |
 
     | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
     |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
