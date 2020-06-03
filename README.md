@@ -91,15 +91,28 @@
          
           
 - # JMeter TS/TJ Time Logs  
-    - #### Instruction of how to use the 'log_processing.*' script:  
+    - #### Instruction of how to use the 'log_processing.*' script with the cammand:  
+    Move the log_processing script into your tomcat project root folder (ex: ~/tomcat/webapps/fablix-pj)  
+    scp -i "your AWS .pem file location" "your log_processor location" "ubuntu@AWS public adress:~/tomcat/root/folder"  
+      
+    Run the processing script with the command:  
+    python3 log_processing.py  
+    (Make sure that you have used the search function of the fablix web application, which makes TJ/TS log files in the tomcat root folder)  
+      
+    After running the script, it will show the average time of both TJ and TS logs.
+    Example output:  
+    TS Average = 123456.78  
+    TJ Average = 123456.78 
+    
+
         
 - # JMeter TS/TJ Time Measurement Report  
   | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
     |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-    | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
-    | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
+    | Case 1: HTTP/1 thread                          | ![](path to image in img/)   | 30                         | 1049189.01                                  | 776008.2                        | ??           |
+    | Case 2: HTTP/10 threads                        | ![](path to image in img/)   | 1                         | 2599622.12                                  | 1328231.39                        | ??           |
     | Case 3: HTTPS/10 threads                       | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
-    | Case 4: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | ??                         | ??                                  | ??                        | ??           |
+    | Case 4: HTTP/10 threads/No connection pooling  | ![](path to image in img/)   | 46                         | 4447569.22                                  | 2359263.75                        | ??           |
 
     | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
     |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
