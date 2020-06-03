@@ -92,9 +92,10 @@
           
 - # JMeter TS/TJ Time Logs  
     - #### Instruction of how to use the 'log_processing.*' script:  
-    Move the log_processing script into your tomcat project root folder.  
+    Copy the log_processing script into your tomcat project root folder.  
+    cp log_processing.py ~/tomcat/webapps/fablix-pj  
     
-    Run the processing script with the command:  
+    Run the processing script in the fablix tomcat root folder with the command:  
     python3 log_processing.py  
     (Make sure that you have used the search function of the fablix web application, which makes TJ/TS log files in the tomcat root folder)  
       
