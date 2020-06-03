@@ -39,7 +39,7 @@ public class SearchServlet extends HttpServlet {
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             if (envCtx == null)
                 out.println("envCtx is NULL");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedbreadonly");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
             if (ds == null)
                 out.println("ds is null.");
             Connection dbcon = ds.getConnection();
@@ -152,6 +152,7 @@ public class SearchServlet extends HttpServlet {
             String filePath = getServletContext().getRealPath("/");
             String tjfilePath = filePath + "tj_log.txt";
             String tsfilePath = filePath + "ts_log.txt";
+            System.out.println(tsfilePath);
             FileWriter tjFile = new FileWriter(tjfilePath, true);
             FileWriter tsFile = new FileWriter(tsfilePath, true);
             tjFile.write(tjtotal +"\n");
