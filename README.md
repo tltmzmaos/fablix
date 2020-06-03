@@ -92,7 +92,7 @@
           
 - # JMeter TS/TJ Time Logs  
     - #### Instruction of how to use the 'log_processing.*' script with the cammand:  
-    Move the log_processing script into your tomcat project root folder (ex: ~/tomcat/webapps/fablix-pj)  
+    Move the log_processing script into your tomcat project root folder (ex: ~/tomcat/webapps/fablix-pj):  
     
     scp -i "your AWS .pem file location" "your log_processor location" "ubuntu@AWS public adress:~/tomcat/root/folder"    
       
