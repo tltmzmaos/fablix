@@ -101,8 +101,8 @@
       
     After running the script, it will show the average time of both TJ and TS logs.
     Example output:  
-    TS Average = 123456.78  
-    TJ Average = 123456.78 
+    TS Average = 1.23  
+    TJ Average = 1.23 
     
 
         

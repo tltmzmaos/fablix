@@ -14,8 +14,8 @@ for i in ts.readlines():
 for i in tj.readlines():
     tjTime += int(i)
 
-tsavg = round(tsTime / numOfLine,2)
-tjavg = round(tjTime / numOfLine,2)
+tsavg = round((tsTime / numOfLine)/1000000, 2)
+tjavg = round((tjTime / numOfLine)/1000000, 2)
 
 print("TS Average =", tsavg)
 print("TJ Average =", tjavg)
