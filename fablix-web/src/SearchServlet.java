@@ -133,14 +133,20 @@ public class SearchServlet extends HttpServlet {
 
                     jsonArray.add(jsonObject);
                 }
+                long tjtempStart = System.nanoTime();
                 rs.close();
                 statement.close();
+                long tjtempEnd = System.nanoTime();
+                tjtotal = tjtotal + (tjtempEnd-tjtempStart);
             }
 
             out.write(jsonArray.toString());
             response.setStatus(200);
+            long tjts = System.nanoTime();
             ft_rs.close();
             p_s.close();
+            long tjte = System.nanoTime();
+            tjtotal = tjtotal + (tjte-tjts);
 
             // Single Connection
             //con.close();
