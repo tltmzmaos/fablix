@@ -42,7 +42,7 @@
     6. open the tomcat manager page and click on fablix-pi, which will show the fablix website
     
     - #### Collaborations and Work Distribution:  
-    Jongmin Lee: Connection Pooling, Master/slave, Loadbalancing
+    Jongmin Lee: Connection Pooling, Master/slave, Loadbalancing, Log Processing Script, JMeter report  
     
 - # Connection Pooling  
     - #### Filename/path of all file using JDBC Connection Pooling:  
@@ -99,7 +99,7 @@
     python3 log_processing.py  
     (Make sure that you have used the search function of the fablix web application, which makes TJ/TS log files in the tomcat root folder)  
       
-    After running the script, it will show the average time of both TJ and TS logs.
+    After running the script, it will show the average time of both TJ and TS logs.  
     Example output:  
     TS Average = 1.23  
     TJ Average = 1.23 
