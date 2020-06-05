@@ -1,7 +1,8 @@
 - # General  
     - #### Team# : TEAM-191  
       
-    - #### Project 5 Video Demo Link:  
+    - #### Project 5 Video Demo Link:  https://drive.google.com/file/d/1YvBj6rlYI9c42DVRluPwPxFUhhz2N1MC/view?usp=sharing  
+    (Note: I moved log_processing.* script into the fablix tomcat root folder instead of scp the log files into the local storage)  
       
     - #### Instruction of deployment:
     1. git clone https://github.com/UCI-Chenli-teaching/cs122b-spring20-team-191.git
