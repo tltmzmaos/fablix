@@ -63,6 +63,7 @@
     - #### Explain how the Connection Pooling is utilized in the Fabflix code:  
         Master and Slave data resources are configured in Context.xml.  
         The Pool was set by setting maxTotal, maxIdle, maxWaitMills, and autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true inside the Resource.  
+        Since connection pooling makes a connection pool where each request borrows and returns, better performance can be expected than making a connection for each request.
         
           
     - #### Explain how Connection Pooling works with two backend SQL:  
