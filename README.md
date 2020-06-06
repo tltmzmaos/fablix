@@ -62,7 +62,7 @@
         
     - #### Explain how the Connection Pooling is utilized in the Fabflix code:  
         Master and Slave data resources are configured in Context.xml.  
-        The Pool was set by setting maxTotal, maxIdle, and maxWaitMills inside the Resource.  
+        The Pool was set by setting maxTotal, maxIdle, maxWaitMills, and autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true inside the Resource.  
         
           
     - #### Explain how Connection Pooling works with two backend SQL:  
@@ -89,6 +89,7 @@
         Two DataSources (Master and Slave) are defined in Context.xml.  
         The servlets which have data writing works are set to connect to the Master datasource.  
         The other servlets which have only reading data works are set to connect to the Slave datasource.
+        Since the professor said that it is okay to do hardcode for this project, I used hardcode to route the right SQL.  
          
           
 - # JMeter TS/TJ Time Logs  
