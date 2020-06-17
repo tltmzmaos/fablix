@@ -86,7 +86,7 @@
         Two DataSources (Master and Slave) are defined in Context.xml.  
         The servlets which have data writing works are set to connect to the Master datasource.  
         The other servlets which have only reading data works are set to connect to the Slave datasource.  
-        Since the professor said that it is okay to do hardcode for this project, I used hardcode to route the right SQL.  
+         
          
           
 - # JMeter TS/TJ Time Logs  
